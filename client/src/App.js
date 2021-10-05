@@ -4,11 +4,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import Nav from './components/Nav';
+import Map from './pages/Map';
 
-import EditLocation from './pages/EditLocation';
+
+
 import ListLocations from "./pages/ListLocations";
-
-import AddEvent from './components/AddEvent';
 import ListEvents from "./pages/ListEvents"
 
 
@@ -19,9 +19,9 @@ function App() {
         <Nav />
         <Switch>
          <Route exact path="/" component={HomePage}></Route>
+         <Route exact path="/map" component={Map}></Route>
          <Route exact path="/api/locations" component={ListLocations}></Route>
          <Route exact path="/api/events" component={ListEvents}></Route>
-         <Route exact path="/api/locations/:id" component={EditLocation}></Route>
         </Switch>
       </BrowserRouter>
 

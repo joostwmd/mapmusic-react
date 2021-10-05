@@ -26,7 +26,7 @@ function ListEvents() {
     
     return (
         <div>
-            <AddEvent events={events} refreshEvent={getAllEvents}></AddEvent>
+            <AddEvent events={events} refreshEvents={getAllEvents}></AddEvent>
 
             <h3>all events</h3>
             {events.map(event => <EventCard key={event._id} {...event}/>)} 

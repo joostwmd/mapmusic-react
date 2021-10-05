@@ -20,6 +20,8 @@ function Nav() {
                <Link to="/api/events">
                    <button>events</button>
                </Link>
+
+               
             </nav>
         </div>
     )
