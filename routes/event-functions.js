@@ -34,8 +34,9 @@ router.get("/events", (req, res, next) => {
     const startingTime = req.body.startingTime
     const endingTime = req.body.endingTime
     const ageOfEntrance = req.body.ageOfEntrance
-    const gerne = "hip-hop"
+    const gerne = req.body.genre
     //error
+    console.log(gerne)
 
     Event.create({
       name : name,

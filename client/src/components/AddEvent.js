@@ -27,12 +27,14 @@ function AddEvent(props) {
     //post all info
 	const [name, setName] = useState();
 	const [date, setDate] = useState()
-    const [location, setLocation] = useState(locations[0]) // i need to implement a logic, that waits until all the locations are loadede
+    const [location, setLocation] = useState() // i need to implement a logic, that waits until all the locations are loadede
     const [price, setPrice] = useState()
     const [startingTime, setStartingTime] = useState()
     const [endingTime, setEndingTime] = useState()
     const [ageOfEntrance, setAgeOfEntrance] = useState()
     const [genre, setGenre] = useState()
+
+    const musicGenres = ["techno", "hip-hop", "jazz"]
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -107,8 +109,9 @@ function AddEvent(props) {
 
                 <label htmlFor="genre">genre of event</label>
                 <select id="gerne" onChange={e => setGenre(e.target.value)}>
-                    <option value={[genre, "techno"]}>techno</option>
-                    <option value={[genre, "hip-hop"]}>hip-hop</option>
+                    {musicGenres.map(musicGenre => {
+                        return <option value={musicGenre}>{musicGenre}</option>
+                    })}
                 </select>
 
                 <label htmlFor="chooseLocation">choose your location</label>

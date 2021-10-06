@@ -5,11 +5,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Nav from './components/Nav';
 import Map from './pages/Map';
-
-
-
 import ListLocations from "./pages/ListLocations";
 import ListEvents from "./pages/ListEvents"
+import FilterSection from "./components/FilterSection"
 
 
 function App() {
@@ -22,6 +20,7 @@ function App() {
          <Route exact path="/map" component={Map}></Route>
          <Route exact path="/api/locations" component={ListLocations}></Route>
          <Route exact path="/api/events" component={ListEvents}></Route>
+         <Route exact path="/filter" component={FilterSection}></Route>
         </Switch>
       </BrowserRouter>
 

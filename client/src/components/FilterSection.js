@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
 
-function Datefilter() {
+//import Slider from "@mui/material/Slider"
+
+function FilterSection() {
     
-    function getDayOne(){
+     function getDayOne(){
         const dayOne = new Date().toLocaleDateString()
         const end = dayOne.lastIndexOf(".")
         var dayOneWithoutYear = dayOne.slice(0, end)
@@ -120,20 +122,47 @@ function Datefilter() {
         
     }
 
+    const [clickedFilterMenu, setClickedFilterMenu] = useState(false)
+
+    const openFilterMenu = (e) => {
+       e.preventDefault()
+       setClickedFilterMenu(true)
+    }
+
+    const closeFilterMenu = (e) => {
+      e.preventDefault()
+      setClickedFilterMenu(false)
+  }
+
     
     return (
-        <div>
-            
-                <button onClick={clickedDayOne} id="dayOne">{getDayOne()}</button>
-                <button onClick={clickedDayTwo} id="dayTwo">{getDayTwo()}</button>
-                <button onClick={clickedDayThree} id="dayThree">{getDayThree()}</button>
-                <button onClick={clickedDayFour} id="dayFour">{getDayFour()}</button>
-                <button onClick={clickedDayFive} id="dayFive">{getDayFive()}</button>
-                <button onClick={clickedDaySix} id="daySix">{getDaySix()}</button>
-                <button onClick={clickedDaySeven} id="daySeven">{getDaySeven()}</button>
-            
+        <div>            
+         <div id="dateFilter">
+           <button onClick={clickedDayOne} id="dayOne">{getDayOne()}</button>
+           <button onClick={clickedDayTwo} id="dayTwo">{getDayTwo()}</button>
+           <button onClick={clickedDayThree} id="dayThree">{getDayThree()}</button>
+           <button onClick={clickedDayFour} id="dayFour">{getDayFour()}</button>
+           <button onClick={clickedDayFive} id="dayFive">{getDayFive()}</button>
+           <button onClick={clickedDaySix} id="daySix">{getDaySix()}</button>
+           <button onClick={clickedDaySeven} id="daySeven">{getDaySeven()}</button>
+         </div>
+
+         <div id="filterMenu">
+          <button onClick={openFilterMenu}>filter</button>
+          {clickedFilterMenu ?(
+                  <div id="filtermenu">
+                      <h1>filter menu</h1>
+                      <button onClick={closeFilterMenu}>x</button>
+                      <input type="range"></input>
+                      <input type="range"></input>
+                      <input type="range"></input>
+                      
+                  </div>
+              ): null}
+         </div>
+                
         </div>
     )
 }
 
-export default Datefilter
+export default FilterSection

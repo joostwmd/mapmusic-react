@@ -1,17 +1,28 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import ReactMapGl, {Marker, Popup} from "react-map-gl"
+import Style from '../App.css'
 
-import Datefilter from '../components/Datefilter'
+import FilterSection from '../components/FilterSection'
 
 
 function Map() {
+
+   const berlinBounds = [
+       [52.37287294941263, 13.111987793255805], // south west
+       [52.703520866231194, 13.793436405383185] // north east
+   ] 
+
+   //const mapBounds = [13.404954, 52.520008]
+
    const [viewport, setViewport] = useState({
        latitude : 52.520008,
        longitude : 13.404954,
        width : "100vw",
        height : "100vh",
-       zoom : 10
+       zoom : 9,
+       //maxBounds : mapBounds,
+       minZoom: 9
    })
 
     
@@ -31,30 +42,20 @@ function Map() {
    
     const [clickedEvent, setClickedEvent] = useState(null)
     const [hoveredEvent, setHoveredEvent] = useState(null)
-    const [clickedFilterMenu, setClickedFilterMenu] = useState(false)
-
-    const openFilterMenu = (e) => {
-       e.preventDefault()
-       setClickedFilterMenu(true)
-    }
-
-    const closeFilterMenu = (e) => {
-        e.preventDefault()
-        setClickedFilterMenu(false)
-    }
+    
     
     return (
-        <div>
-         <Datefilter />
-         <button onClick={openFilterMenu}>filter</button>
-         <ReactMapGl
-           {...viewport}
-           mapboxApiAccessToken = "pk.eyJ1Ijoiam9vc3R3bWQiLCJhIjoiY2t1NDQ3NmJqMXRwbzJwcGM5a3FuY3B3dCJ9.yyon_mO5Y9sI1WgD-XFDRQ"
-           mapStyle = "mapbox://styles/joostwmd/ckucoygnc51gn18s0xu6mjltv"
-           onViewportChange = {viewport => {
+    <div>
+        <div id="mapPage">
+          <div id="map">
+             <ReactMapGl
+             {...viewport}
+             mapboxApiAccessToken = "pk.eyJ1Ijoiam9vc3R3bWQiLCJhIjoiY2t1NDQ3NmJqMXRwbzJwcGM5a3FuY3B3dCJ9.yyon_mO5Y9sI1WgD-XFDRQ"
+             mapStyle = "mapbox://styles/joostwmd/ckucoygnc51gn18s0xu6mjltv"
+             onViewportChange = {viewport => {
                setViewport(viewport)
-           }}
-           >
+             }}
+             >
              {allEvents.map((event) => {
                  return (
                     <Marker 
@@ -96,6 +97,17 @@ function Map() {
                      <div>
                          <h1>{clickedEvent.name}</h1>
                          <p>{clickedEvent.date.toString().slice(0, 10)}</p>
+                         <p>some short discription</p>
+                         <p>some dj</p>
+                         <audio controls>
+                             <source src="https://p.scdn.co/mp3-preview/6be8eb12ff18ae09b7a6d38ff1e5327fd128a74e?cid=162b7dc01f3a4a2ca32ed3cec83d1e02"></source>
+                         </audio>
+
+                         <h3>info</h3>
+                         <p>genre : {clickedEvent.genre}</p>
+                         <p>cost : {clickedEvent.cost}</p>
+                         <p>opening Hours : from {clickedEvent.startingTime} to {clickedEvent.endingTime}</p>
+                         <p>age of entrance : {clickedEvent.ageOfEntrance}</p>
                      </div>
                  </Popup>
               ) : null}
@@ -106,24 +118,19 @@ function Map() {
                    longitude={hoveredEvent.location.coordinates[1]}
                   >
                    <div>
-                       <h1>hover</h1>
+                       <h1>{hoveredEvent.name}</h1>
+                       <p>propmeted by: some propmoter</p>
                    </div>
 
                    </Popup>
               ) : null}
-              {clickedFilterMenu ?(
-                  <div id="filtermenu">
-                      <h1>filter menu</h1>
-                      <button onClick={closeFilterMenu}>x</button>
-                      <input type="range"></input>
-                      <input type="range"></input>
-                      <input type="range"></input>
-                      
-                  </div>
-              ): null}
-           </ReactMapGl>
-            
-        </div>
+             </ReactMapGl>
+          </div>
+          <div id="filter">
+              <FilterSection />
+          </div>
+        </div>   
+    </div>
     )
 }
 

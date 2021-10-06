@@ -21,6 +21,10 @@ function Nav() {
                    <button>events</button>
                </Link>
 
+               <Link to="/filter">
+                   <button>filter</button>
+               </Link>
+
                
             </nav>
         </div>

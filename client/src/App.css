@@ -40,3 +40,9 @@
 .selectedDate{
   color: blue;
 }
+
+.mapPage{
+  display: flex;
+  flex-direction: row;
+  align-content: left;
+}
