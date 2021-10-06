@@ -4,7 +4,12 @@ const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
     name: String,
-    date: Date, 
+    date: String, 
+    cost : Number, 
+    startingTime : String,
+    endingTime : String,
+    ageOfEntrance : String,
+    genre : Array,
 
      location: {
          type:  Schema.Types.ObjectId,

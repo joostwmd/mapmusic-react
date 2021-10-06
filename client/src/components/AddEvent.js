@@ -25,14 +25,19 @@ function AddEvent(props) {
         }, [])
 
     //post all info
-	const [name, setName] = useState('');
-	const [date, setDate] = useState('')
-    const [location, setLocation] = useState('')
+	const [name, setName] = useState();
+	const [date, setDate] = useState()
+    const [location, setLocation] = useState(locations[0]) // i need to implement a logic, that waits until all the locations are loadede
+    const [price, setPrice] = useState()
+    const [startingTime, setStartingTime] = useState()
+    const [endingTime, setEndingTime] = useState()
+    const [ageOfEntrance, setAgeOfEntrance] = useState()
+    const [genre, setGenre] = useState()
+
     const handleSubmit = e => {
         e.preventDefault()
 
-        const requestBody = {name, date, location};
-
+        const requestBody = {name, date, location, price, startingTime, endingTime, ageOfEntrance, genre};
         axios.post(`${API_URL}/api/events`, requestBody)
              .then(res => {
                  setName("")
@@ -60,13 +65,51 @@ function AddEvent(props) {
 					onChange={e => setName(e.target.value)}
 				/>
 
-                <label htmlFor="longitude">date of event</label>
+                <label htmlFor="date">date of event</label>
 				<input
-					type="date"
+					type="text"
 					name="date"
 					value={date}
 					onChange={e => setDate(e.target.value)}
 				/>
+
+                <label htmlFor="price">price of event</label>
+				<input
+					type="number"
+					name="price"
+					value={price}
+					onChange={e => setPrice(e.target.value)}
+				/>
+
+                <label htmlFor="startingTime">start of event</label>
+				<input
+					type="text"
+					name="startingTime"
+					value={startingTime}
+					onChange={e => setStartingTime(e.target.value)}
+				/>
+
+                <label htmlFor="endingTime">end of event</label>
+				<input
+					type="text"
+					name="endingTime"
+					value={endingTime}
+					onChange={e => setEndingTime(e.target.value)}
+				/>
+
+                <label htmlFor="ageOfEntrance">age of entrance</label>
+				<input
+					type="text"
+					name="ageOfEntrance"
+					value={ageOfEntrance}
+					onChange={e => setAgeOfEntrance(e.target.value)}
+				/>
+
+                <label htmlFor="genre">genre of event</label>
+                <select id="gerne" onChange={e => setGenre(e.target.value)}>
+                    <option value={[genre, "techno"]}>techno</option>
+                    <option value={[genre, "hip-hop"]}>hip-hop</option>
+                </select>
 
                 <label htmlFor="chooseLocation">choose your location</label>
                 <select id="chooseLocation" onChange={e => setLocation(e.target.value)} >
