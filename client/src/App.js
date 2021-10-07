@@ -8,7 +8,7 @@ import Map from './pages/Map';
 import ListLocations from "./pages/ListLocations";
 import ListEvents from "./pages/ListEvents"
 import FilterSection from "./components/FilterSection"
-
+import ArtistCard from './components/ArtistCard';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
          <Route exact path="/api/locations" component={ListLocations}></Route>
          <Route exact path="/api/events" component={ListEvents}></Route>
          <Route exact path="/filter" component={FilterSection}></Route>
+         <Route exact path="/artist" component={ArtistCard}></Route>
         </Switch>
       </BrowserRouter>
 

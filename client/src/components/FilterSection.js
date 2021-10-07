@@ -1,10 +1,17 @@
 import React from 'react'
 import { useState } from 'react'
 
-//import Slider from "@mui/material/Slider"
 
-function FilterSection() {
+
+function FilterSection(props) {
     
+
+  /* FÜR FILTERBAR UND KARTE 
+   
+  Z-Index (bestimmt, was über was gelegt wird) einstellen, Filterbar zuerst
+  Disable map movement  map dragging 
+
+  */
      function getDayOne(){
         const dayOne = new Date().toLocaleDateString()
         const end = dayOne.lastIndexOf(".")
@@ -93,58 +100,172 @@ function FilterSection() {
       }
 
     const [selectedDate, setSelectedDate] = useState(getDayOne())
+    
+    const [dayOneClicked, setDayOneClicked] = useState(true)
+    const [dayTwoClicked, setDayTwoClicked] = useState(false)
+    const [dayThreeClicked, setDayThreeClicked] = useState(false)
+    const [dayFourClicked, setDayFourClicked] = useState(false)
+    const [dayFiveClicked, setDayFiveClicked] = useState(false)
+    const [daySixClicked, setDaySixClicked] = useState(false)
+    const [daySevenClicked, setDaySevenClicked] = useState(false)
+
+
     const clickedDayOne = () => {
         setSelectedDate(getDayOne())
+        props.setDateFilter(getDayOne())
+
+        //visual feedback
+        setDayOneClicked(true)
+        setDayTwoClicked(false)
+        setDayThreeClicked(false)
+        setDayFourClicked(false)
+        setDayFiveClicked(false)
+        setDaySixClicked(false)
+        setDaySevenClicked(false)
     }
 
     const clickedDayTwo = () => {
         setSelectedDate(getDayTwo())
+        props.setDateFilter(getDayTwo())
+
+
+        //visual feedback
+        setDayOneClicked(false)
+        setDayTwoClicked(true)
+        setDayThreeClicked(false)
+        setDayFourClicked(false)
+        setDayFiveClicked(false)
+        setDaySixClicked(false)
+        setDaySevenClicked(false)
+        
     }
 
     const clickedDayThree = () => {
         setSelectedDate(getDayThree())
+        props.setDateFilter(getDayThree())
+
+
+        //visual feedback
+        setDayOneClicked(false)
+        setDayTwoClicked(false)
+        setDayThreeClicked(true)
+        setDayFourClicked(false)
+        setDayFiveClicked(false)
+        setDaySixClicked(false)
+        setDaySevenClicked(false)
     }
 
     const clickedDayFour = () => {
         setSelectedDate(getDayFour())
+        props.setDateFilter(getDayFour())
+
+
+        //visual feedback
+        setDayOneClicked(false)
+        setDayTwoClicked(false)
+        setDayThreeClicked(false)
+        setDayFourClicked(true)
+        setDayFiveClicked(false)
+        setDaySixClicked(false)
+        setDaySevenClicked(false)
     }
 
     const clickedDayFive = () => {
         setSelectedDate(getDayFive())
+        props.setDateFilter(getDayFive())
+
+
+        //visual feedback
+        setDayOneClicked(false)
+        setDayTwoClicked(false)
+        setDayThreeClicked(false)
+        setDayFourClicked(false)
+        setDayFiveClicked(true)
+        setDaySixClicked(false)
+        setDaySevenClicked(false)
     }
 
     const clickedDaySix = () => {
         setSelectedDate(getDaySix())
+        props.setDateFilter(getDaySix())
+
+
+        //visual feedback
+        setDayOneClicked(false)
+        setDayTwoClicked(false)
+        setDayThreeClicked(false)
+        setDayFourClicked(false)
+        setDayFiveClicked(false)
+        setDaySixClicked(true)
+        setDaySevenClicked(false)
     }
 
     const clickedDaySeven = () => {
         setSelectedDate(getDaySeven())
+        props.setDateFilter(getDaySeven())
+
+
+        //visual feedback
+        setDayOneClicked(false)
+        setDayTwoClicked(false)
+        setDayThreeClicked(false)
+        setDayFourClicked(false)
+        setDayFiveClicked(false)
+        setDaySixClicked(false)
+        setDaySevenClicked(true)
         
     }
+  
+    //FILTER MENU
 
     const [clickedFilterMenu, setClickedFilterMenu] = useState(false)
+    
 
     const openFilterMenu = (e) => {
        e.preventDefault()
        setClickedFilterMenu(true)
+       setFilterMenuOpen(true)
+       
     }
 
     const closeFilterMenu = (e) => {
       e.preventDefault()
       setClickedFilterMenu(false)
+      setFilterMenuOpen(false)
+      
   }
+
+     
+
+    const [startingTimeVal, setStartingTimeVal] = useState(14)
+    const [endingTimeVal, setEndingTimeVal] = useState(12)
+    const [filteredGenre, setFilteredGenre] = useState("hip-hop")
+    const [filteredAge, setFilteredAge] = useState("18+")
+    const [costVal, setCostVal] = useState(15)
+    const [filterMenuOpen, setFilterMenuOpen] = useState(false)
+
+    const handleSubmit = () => {
+      props.setStartingTimeFilter(startingTimeVal)
+      props.setEndingTimeFilter(endingTimeVal)
+      props.setCostFilter(costVal)
+      props.setStartingTimeFilter(filteredAge)
+      props.setGenreFilter(filteredGenre)
+      props.setFilterMenuOpen(filterMenuOpen)
+
+      setClickedFilterMenu(false)
+    }
 
     
     return (
         <div>            
          <div id="dateFilter">
-           <button onClick={clickedDayOne} id="dayOne">{getDayOne()}</button>
-           <button onClick={clickedDayTwo} id="dayTwo">{getDayTwo()}</button>
-           <button onClick={clickedDayThree} id="dayThree">{getDayThree()}</button>
-           <button onClick={clickedDayFour} id="dayFour">{getDayFour()}</button>
-           <button onClick={clickedDayFive} id="dayFive">{getDayFive()}</button>
-           <button onClick={clickedDaySix} id="daySix">{getDaySix()}</button>
-           <button onClick={clickedDaySeven} id="daySeven">{getDaySeven()}</button>
+           <button onClick={clickedDayOne} style={dayOneClicked ? {color : "blue"}  : { color : "red" }}>{getDayOne()}</button>
+           <button onClick={clickedDayTwo} style={dayTwoClicked ? {color : "blue"}  : { color : "red" }}>{getDayTwo()}</button>
+           <button onClick={clickedDayThree} style={dayThreeClicked ? {color : "blue"}  : { color : "red" }}>{getDayThree()}</button>
+           <button onClick={clickedDayFour} style={dayFourClicked ? {color : "blue"}  : { color : "red" }}>{getDayFour()}</button>
+           <button onClick={clickedDayFive} style={dayFiveClicked ? {color : "blue"}  : { color : "red" }}>{getDayFive()}</button>
+           <button onClick={clickedDaySix} style={daySixClicked ? {color : "blue"}  : { color : "red" }}>{getDaySix()}</button>
+           <button onClick={clickedDaySeven} style={daySevenClicked ? {color : "blue"}  : { color : "red" }}>{getDaySeven()}</button>
          </div>
 
          <div id="filterMenu">
@@ -153,10 +274,63 @@ function FilterSection() {
                   <div id="filtermenu">
                       <h1>filter menu</h1>
                       <button onClick={closeFilterMenu}>x</button>
-                      <input type="range"></input>
-                      <input type="range"></input>
-                      <input type="range"></input>
                       
+                      <form id="filterMenu" onSubmit={handleSubmit}>
+                      <div id="openingHoursSlider">
+                       <input 
+                         type="range"
+                         min={14}
+                         max={24}
+                         step={1}
+                         value={startingTimeVal}
+                         onChange={e => setStartingTimeVal(e.target.value)}
+                         >
+                       </input>
+
+                       <input 
+                         type="range"
+                         min={0}
+                         max={12}
+                         step={1}
+                         value={endingTimeVal}
+                         onChange={e => setEndingTimeVal(e.target.value)}
+                         >
+                       </input>
+
+                       <p>from : {startingTimeVal} at least until : {endingTimeVal}</p>
+                      </div>  
+                        
+                       <div>
+                         <label>choose genre</label>
+                         <select id="filterGenre"
+                            onChange={e => setFilteredAge(e.target.value)}>
+
+                           <option value={"hip-hop"}>hip-hop</option>
+                           <option value={"techno"}>techno</option>
+                           <option value={"jazz"}>jazz</option>
+                         </select>
+                       </div>
+                      
+                      <label>age of entrance</label>
+                       <select id="filterAge"
+                          onChange={e => setFilteredAge(e.target.value)}>
+
+                         <option value={"18+"}>18+</option>
+                         <option value={"21+"}>21+</option>
+                       </select>
+
+                       <label>max ticket price</label>
+                       <input 
+                         type="range"
+                         min={0}
+                         max={20}
+                         step={1}
+                         value={costVal}
+                         onChange={e => setCostVal(e.target.value)}
+                         >
+                       </input>  
+                       <button type="submit">get results</button>
+                      </form>        
                   </div>
               ): null}
          </div>

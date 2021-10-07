@@ -30,13 +30,14 @@ router.get("/events", (req, res, next) => {
     const name = req.body.name
     const date = req.body.date
     const location =  req.body.location
+    const discription = req.body.discription
     const cost = req.body.price
     const startingTime = req.body.startingTime
     const endingTime = req.body.endingTime
     const ageOfEntrance = req.body.ageOfEntrance
     const gerne = req.body.genre
-    //error
-    console.log(gerne)
+    const lineUp = req.body.lineUp
+    console.log(lineUp)
 
     Event.create({
       name : name,
@@ -46,12 +47,23 @@ router.get("/events", (req, res, next) => {
       startingTime : startingTime,
       endingTime : endingTime,
       ageOfEntrance : ageOfEntrance,
-      genre : gerne
+      genre : gerne,
+      lineUp : [
+        {
+            artistname : "DLV",
+            spotifyName : "DLV"
+        },
+
+        {
+          artistname : "2LADE",
+          spotifyName : "2LADE"
+      }
+    ],
+
     })
   
     .then(event => {
       res.status(201).json(event)
-      console.log(name, date, location, cost, startingTime, endingTime, ageOfEntrance, gerne)
     })
     .catch(err => next(err))
   })

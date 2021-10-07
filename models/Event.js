@@ -5,12 +5,21 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema({
     name: String,
     date: String, 
+    //discription : String, 
     cost : Number, 
     startingTime : String,
     endingTime : String,
     ageOfEntrance : String,
     genre : Array,
 
+     lineUp : [
+         {
+             artistname : String,
+             spotifyName : String
+         }
+     ],
+
+    // ticket : String
      location: {
          type:  Schema.Types.ObjectId,
          ref: "Location"

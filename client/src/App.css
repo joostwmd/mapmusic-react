@@ -41,8 +41,12 @@
   color: blue;
 }
 
-.mapPage{
-  display: flex;
-  flex-direction: row;
-  align-content: left;
+
+
+
+#popup{
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between  
 }
+

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios';
+import AddArtist from './AddArtist';
 
 
 
@@ -27,19 +28,46 @@ function AddEvent(props) {
     //post all info
 	const [name, setName] = useState();
 	const [date, setDate] = useState()
-    const [location, setLocation] = useState() // i need to implement a logic, that waits until all the locations are loadede
+    const [location, setLocation] = useState() // i need to implement a logic, that waits until all the locations are loadeded
+    const [discription, setDiscription] = useState("")
     const [price, setPrice] = useState()
     const [startingTime, setStartingTime] = useState()
     const [endingTime, setEndingTime] = useState()
     const [ageOfEntrance, setAgeOfEntrance] = useState()
     const [genre, setGenre] = useState()
+    const [ticketLink, setTicketLink] = useState("")
 
     const musicGenres = ["techno", "hip-hop", "jazz"]
 
+    //Line Up
+    
+    const [artistName, setArtistName] = useState("")
+    const [spotfiyName, setSpotifyName] = useState("")
+    const [lineUpState, setLineUpState] = useState([])
+
+    const lineUpArray = []
+    
+
+    const addArtist = () => {
+       // e.preventDefault()
+    
+        setArtistName(artistName)
+        setSpotifyName(spotfiyName)
+        lineUpArray.push({artistName : artistName, spotfiyName : spotfiyName})
+        console.log(lineUpArray)
+        // .then(
+        //     lineUp.push({artistName : artistName, spotfiyName : spotfiyName}),
+        //     setArtistName(""),
+        //     setSpotifyName("")
+        
+        // .catch(err => (console.log(err)))
+    }
+    
+
     const handleSubmit = e => {
         e.preventDefault()
-
-        const requestBody = {name, date, location, price, startingTime, endingTime, ageOfEntrance, genre};
+        setLineUpState(lineUpArray)
+        const requestBody = {name, date, location, discription, price, startingTime, endingTime, ageOfEntrance, genre, lineUpState, ticketLink};
         axios.post(`${API_URL}/api/events`, requestBody)
              .then(res => {
                  setName("")
@@ -83,6 +111,14 @@ function AddEvent(props) {
 					onChange={e => setPrice(e.target.value)}
 				/>
 
+                <label htmlFor="discription">start of event</label>
+				<input
+					type="text"
+					name="discription"
+					value={discription}
+					onChange={e => setDiscription(e.target.value)}
+				/>
+
                 <label htmlFor="startingTime">start of event</label>
 				<input
 					type="text"
@@ -121,6 +157,42 @@ function AddEvent(props) {
                  })}
                 </select>
 
+                <label htmlFor="ticket-link">age of entrance</label>
+				<input
+					type="text"
+					name="ticket-link"
+					value={ticketLink}
+					onChange={e => setTicketLink(e.target.value)}
+				/>
+
+                <h2>Line Up</h2>
+                
+                {lineUpArray.map(artist => {
+                    return (
+                        <h4>{artist.artistName}, {artist.spotfiyName}</h4>
+                    )
+                })}
+
+               
+                    <label htmlFor="artistName">name of event</label>
+				    <input
+					    type="text"
+					    name="name"
+					    value={artistName}
+					    onChange={e => setArtistName(e.target.value)}
+				    />
+
+                    <label htmlFor="spotfiyName">name of event</label>
+				        <input
+					    type="text"
+					    name="name"
+					    value={spotfiyName}
+					    onChange={e => setSpotifyName(e.target.value)}
+				    />
+
+                <button onClick={addArtist}>add artist</button>
+       
+
                 <button type="submit">add this event</button>
             </form>
             
@@ -129,4 +201,6 @@ function AddEvent(props) {
 }
 
 export default AddEvent
+
+//<AddArtist addedArtistName={setAddedArtistName} addedSpotfiyName={setAddedSpotifyName} lineUp={setLineUp}></AddArtist>
  

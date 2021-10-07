@@ -25,6 +25,10 @@ function Nav() {
                    <button>filter</button>
                </Link>
 
+               <Link to="/artist">
+                   <button>artist</button>
+               </Link>
+
                
             </nav>
         </div>

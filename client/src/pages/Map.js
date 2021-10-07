@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import ReactMapGl, {Marker, Popup} from "react-map-gl"
-import Style from '../App.css'
-
 import FilterSection from '../components/FilterSection'
+import ArtistCard from '../components/ArtistCard'
+
 
 
 function Map() {
@@ -16,14 +16,22 @@ function Map() {
    //const mapBounds = [13.404954, 52.520008]
 
    const [viewport, setViewport] = useState({
-       latitude : 52.520008,
+       latitude : 52.520008, 
        longitude : 13.404954,
-       width : "100vw",
+       width : "100w",
        height : "100vh",
        zoom : 9,
-       //maxBounds : mapBounds,
-       minZoom: 9
+       maxBounds : [
+        [52.3673215655286, 13.086180844613281], // south west
+        [52.70845414984733, 13.809688463870339] // north east
+    ] 
+       
+       //minZoom: 9
    })
+
+   const [dragPan, setDragPan] = useState(false)
+   const [scrollZoom, setScrollZoom] = useState(false)
+   const [boxZoom, setBoxZoom] = useState(false)
 
     
     const [allEvents, setAllEvents] = useState([])
@@ -43,20 +51,70 @@ function Map() {
     const [clickedEvent, setClickedEvent] = useState(null)
     const [hoveredEvent, setHoveredEvent] = useState(null)
     
+    //tabs logic for the markers
+
+    const [tabValue, setTabsValue] = useState(null)
+
+    const handleTabChange = (e, newValue) => {
+        setTabsValue(newValue)
+    }
+
+    //filterd
+    function getDayOne(){
+        const dayOne = new Date().toLocaleDateString()
+        const end = dayOne.lastIndexOf(".")
+        var dayOneWithoutYear = dayOne.slice(0, end)
+        return dayOneWithoutYear
+      } 
+
+    const [dateFilter, setDateFilter] = useState(getDayOne)
+    const [startingTimeFilter, setStartingTimeFilter] = useState()
+    const [endingTimeFilter, setEndingTimeFilter] = useState()
+    const [costFilter, setCostFilter] = useState()
+    const [ageFilter, setAgeFilter] = useState("18+")
+    const [genreFilter, setGenreFilter] = useState("hip-hop")
+    const [filterMenuOpen, setFilterMenuOpen] = useState(false)
     
+   
+    if(filterMenuOpen === true){
+        console.log("x")
+    }
+
+    console.log(filterMenuOpen)
+
+    // console.log("start ", startingTimeFilter)
+    // console.log("end ", endingTimeFilter)
+    // console.log("cost ", costFilter)
+    // console.log("Age ", ageFilter)
+    // console.log("genre ", genreFilter)
+
+    const filteredEvents = allEvents.filter(function(event){
+        return (
+            event.date === dateFilter 
+
+        //  && Number(event.ageOfEntrance.slice(0, 1)) >= Number(ageFilter.slice(0, 1)) 
+        //  && Number(event.startingTime.slice(0, 1)) >= Number(startingTimeFilter.slice(0, 1)) 
+        //  && Number(event.endingTime.slice(0, 1)) <= Number(endingTimeFilter.slice(0, 1)) 
+        //  && event.cost <= costFilter && event.genre.includes(genreFilter) === true
+        )
+    })
+
     return (
     <div>
-        <div id="mapPage">
-          <div id="map">
              <ReactMapGl
+                
+
              {...viewport}
              mapboxApiAccessToken = "pk.eyJ1Ijoiam9vc3R3bWQiLCJhIjoiY2t1NDQ3NmJqMXRwbzJwcGM5a3FuY3B3dCJ9.yyon_mO5Y9sI1WgD-XFDRQ"
              mapStyle = "mapbox://styles/joostwmd/ckucoygnc51gn18s0xu6mjltv"
-             onViewportChange = {viewport => {
-               setViewport(viewport)
+              onViewportChange = {viewport => {
+                setViewport(viewport)
              }}
              >
-             {allEvents.map((event) => {
+
+                <FilterSection setFilterMenuOpen={setFilterMenuOpen}  setDateFilter={setDateFilter} setAgeFilter={setAgeFilter} setCostFilter={setCostFilter} setGenreFilter={setGenreFilter} setStartingTimeFilter={setStartingTimeFilter} setEndingTimeFilter={setEndingTimeFilter}/>
+             
+             {filteredEvents.map((event) => {
                  return (
                     <Marker 
                     latitude={event.location.coordinates[0]} 
@@ -68,20 +126,25 @@ function Map() {
                          e.preventDefault()
                          setClickedEvent(event)
                          setHoveredEvent(null)
+                         setDragPan(false)
+                         setScrollZoom(false)
                          
                      }}
                       onMouseEnter={(e) => {
                           if(clickedEvent === null){
-                              setHoveredEvent(event)}
+                              setHoveredEvent(event)
+                              
+                              }
                           
                       }}
 
                       onMouseLeave={(e) => {
                           setHoveredEvent(null)
+                          setViewport(viewport)
                           
                       }}
                      >
-                         
+                      <p>{event.location.name}</p>  
                      </button>
                     </Marker>
                  )
@@ -94,22 +157,36 @@ function Map() {
                        setClickedEvent(null)
                    }}
                    >
-                     <div>
-                         <h1>{clickedEvent.name}</h1>
-                         <p>{clickedEvent.date.toString().slice(0, 10)}</p>
-                         <p>some short discription</p>
-                         <p>some dj</p>
-                         <audio controls>
-                             <source src="https://p.scdn.co/mp3-preview/6be8eb12ff18ae09b7a6d38ff1e5327fd128a74e?cid=162b7dc01f3a4a2ca32ed3cec83d1e02"></source>
-                         </audio>
 
-                         <h3>info</h3>
-                         <p>genre : {clickedEvent.genre}</p>
-                         <p>cost : {clickedEvent.cost}</p>
-                         <p>opening Hours : from {clickedEvent.startingTime} to {clickedEvent.endingTime}</p>
-                         <p>age of entrance : {clickedEvent.ageOfEntrance}</p>
-                     </div>
-                 </Popup>
+                    <div>
+                            <div id="popup">
+                                <div>
+                                     <h1>{clickedEvent.name}</h1>
+                                     <p>{clickedEvent.date.toString().slice(0, 10)}</p>
+                                     <p>some short discription</p>
+                                     <p>some dj</p>
+                                     <audio controls>
+                                         <source src="https://p.scdn.co/mp3-preview/6be8eb12ff18ae09b7a6d38ff1e5327fd128a74e?cid=162b7dc01f3a4a2ca32ed3cec83d1e02"></source>
+                                     </audio>
+                                     <h3>info</h3>
+                                     <p>genre : {clickedEvent.genre}</p>
+                                     <p>cost : {clickedEvent.cost}</p>
+                                     <p>opening Hours : from {clickedEvent.startingTime} to {clickedEvent.endingTime}</p>
+                                     <p>age of entrance : {clickedEvent.ageOfEntrance}</p>
+
+                                     <h3>Line Up</h3>
+                                     <ArtistCard  clickedEvent={clickedEvent}  />
+                                </div>
+
+                               
+
+                                <div>
+                                     <h1>{clickedEvent.location.name}</h1>
+                                     <p>{clickedEvent.location.coordinates}</p>
+                                </div>
+                            </div>  
+                    </div>               
+                                 </Popup>
               ) : null}
               
               {hoveredEvent ? (
@@ -125,11 +202,8 @@ function Map() {
                    </Popup>
               ) : null}
              </ReactMapGl>
-          </div>
-          <div id="filter">
-              <FilterSection />
-          </div>
-        </div>   
+        
+           
     </div>
     )
 }
