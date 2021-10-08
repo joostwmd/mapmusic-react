@@ -10,11 +10,15 @@ function AddLocation(props) {
 	const [name, setName] = useState('');
 	const [longitude, setLongitude] = useState('')
     const [latitude, setLatitude] = useState('')
+    const [discription, setDiscription] = useState('')
+    const [nearestStation, setNearestStation] = useState('')
+    const [distance, setDistance] = useState('')
+    const [availableLines, setAvailableLines] = useState('')
 
     const handleSubmit = e => {
         e.preventDefault()
 
-        const requestBody = {name, longitude, latitude};
+        const requestBody = {name, longitude, latitude, discription, nearestStation, distance, availableLines};
 
         axios.post(`${API_URL}/api/locations`, requestBody)
              .then(res => {
@@ -58,6 +62,40 @@ function AddLocation(props) {
 					value={latitude}
 					onChange={e => setLatitude(e.target.value)}
 				/>
+
+                <label htmlFor="discription">discription of location</label>
+				<input
+					type="text"
+					name="discription"
+					value={discription}
+					onChange={e => setDiscription(e.target.value)}
+				/>
+
+                <label htmlFor="nearestStation">neartest Station</label>
+				<input
+					type="text"
+					name="nearestStation"
+					value={nearestStation}
+					onChange={e => setNearestStation(e.target.value)}
+				/>
+
+                <label htmlFor="distance">distance to nearest Station</label>
+				<input
+					type="text"
+					name="distance"
+					value={distance}
+					onChange={e => setDistance(e.target.value)}
+				/>
+
+                <label htmlFor="availableLines">available lines</label>
+				<input
+					type="text"
+					name="availableLines"
+					value={availableLines}
+					onChange={e => setAvailableLines(e.target.value)}
+				/>
+
+                
 
                 <button type="submit">add this location</button>
             </form>

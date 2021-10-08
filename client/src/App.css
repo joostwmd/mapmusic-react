@@ -50,3 +50,95 @@
    justify-content: space-between  
 }
 
+#addEvents{
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+
+}
+
+#addEvents > input{
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#addEvents > select{
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#addEvents > button{
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+
+#addLocation{
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+
+}
+
+#addLocation > input{
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#addLocation > select{
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+#addLocation > button{
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+
+#marker {
+  width: 20px;
+  height: 20px;
+  border-radius: 45%;
+  border-color: transparent;
+  background-color: #a48beb;
+}
+
+#dateFilter > button {
+  width : 50px;
+  height : 50px;
+  border-radius: 45%;
+  border-color: transparent;
+}
+
+#filterMenu > button {
+  width : 100px;
+  height : 25px;
+  border-radius: 0%;
+  border-color: transparent;
+  background-color: #a48beb;
+  color : #fff
+}
+
+#filtermenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+  border-color: #a48beb;
+  border-width: 2px;
+  width : 200px;
+  height : 350px
+}
+
+
+
+
+
+
+

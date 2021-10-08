@@ -5,13 +5,12 @@ const Schema = mongoose.Schema;
 const locationSchema = new Schema({
     name : String,
     coordinates : Array,
-    // discription : String,
+    discription : String,
     
-    // nearestStation : {
-    //     name : String, 
-    //     distance : String,
-    //     availableLines : Array
-    // }
+    nearestStation : String,
+    distance : String, 
+    availableLines : String
+
 })
 
 const Location = mongoose.model('Location', locationSchema)

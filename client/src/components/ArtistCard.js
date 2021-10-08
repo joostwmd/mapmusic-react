@@ -4,7 +4,6 @@ import axios from 'axios'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
-import Paper from '@mui/material/Paper';
 import Fade from '@mui/material/Fade';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
@@ -12,16 +11,55 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 function ArtistCard(props) {
     
-    const API_URL = 'http://localhost:5005' 
-    const CLIENT_ID = "dca951119d9442adaff3bb0c8ba9cf43"
-    const CLIENT_SECRET = "0693cad954e1458fb57095a8328420ac"
+    // const API_URL = 'http://localhost:5005' 
 
-    const spotifyApi = new SpotifyWebApi ({
-        clientId : CLIENT_ID,
-        clientSecret : CLIENT_SECRET
-    })
+     const CLIENT_ID = "dca951119d9442adaff3bb0c8ba9cf43"
+     const CLIENT_SECRET = "0693cad954e1458fb57095a8328420ac"
 
-    
+    // const spotifyApi = new SpotifyWebApi ({
+    //     clientId : CLIENT_ID,
+    //     clientSecret : CLIENT_SECRET
+    // })
+
+    const [ token , setToken ] = useState("")
+    const [ artistId, setArtistID] = useState("")
+
+    useEffect(() => {
+         
+         axios('https://accounts.spotify.com/api/token', {
+             headers: {
+                 'Content-Type' : 'application/x-www-from-urlencoded',
+                 'Authorization' : 'Basic' + btoa(CLIENT_ID + ":" + CLIENT_SECRET)
+             },
+             data: 'grant_type=client_credentials',
+             method: 'POST'
+         })
+         .then(tokenResponse => {
+             setToken(tokenResponse.data.access_token)
+
+        })
+
+    }, [])
+
+    function _getArtistsId(){
+        axios(`https://api.spotify.com/v1/search?query=2LADE&type=artist`, {
+             method: 'GET', 
+             headers: { 'Authorization' : 'Bearer' + token }
+          })
+          .then(queryResponse => {
+             console.log(queryResponse) 
+             setArtistID(queryResponse.data)
+          }
+
+          )
+    }
+
+    function test () {
+       _getArtistsId()
+    }
+
+  // ${artistSpotifyName}
+
 
     // spotify token 
 
@@ -46,11 +84,7 @@ function ArtistCard(props) {
 
     
       // Retrieve an access token
-      spotifyApi
-        .clientCredentialsGrant()
-        .then(data => spotifyApi.setAccessToken(data.body['access_token']))
-        .catch(error => console.log('Something went wrong when retrieving an access token', error));
-
+      
   
        
     
@@ -69,12 +103,7 @@ function ArtistCard(props) {
 
    
         function test () {
-            spotifyApi.searchArtists('Love')
-            .then(function(data) {
-              console.log('Search artists by "Love"', data.body);
-            }, function(err) {
-              console.error(err);
-            });
+            
         }
 
 

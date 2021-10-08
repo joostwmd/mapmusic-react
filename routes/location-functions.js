@@ -17,14 +17,27 @@ router.post("/locations", (req, res, next) => {
     const name = req.body.name
     const altitude = req.body.latitude
     const longitude = req.body.longitude
+    const discription = req.body.discription
+    const nearestStationName = req.body.nearestStation
+    const distance = req.body.distance
+    const availableLines = req.body.availableLines
+    console.log(availableLines)
     
     Location.create({
       name : name,
       //check altitude, logitude if correct order
-      coordinates : [Number(altitude), Number(longitude)]
+      coordinates : [Number(altitude), Number(longitude)],
+
+      discription : discription,
+      nearestStation : nearestStationName, 
+      distance : distance,
+      availableLines : availableLines
+    
+
     })
   
     .then(location => {
+      console.log(location)
       res.status(201).json(location)
     })
   })

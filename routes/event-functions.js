@@ -20,6 +20,7 @@ router.get("/events", (req, res, next) => {
 router.get("/events", (req, res, next) => {
     Location.find()
             .then(locations => {
+              console.log("response from location route ", events)
               res.status(200).json(locations)
             })
             .catch(err => next(err))

@@ -103,20 +103,20 @@ function AddEvent(props) {
 					onChange={e => setDate(e.target.value)}
 				/>
 
+                <label htmlFor="discription">discription of event</label>
+				<input
+					type="text"
+					name="discription"
+					value={discription}
+					onChange={e => setDiscription(e.target.value)}
+				/>
+
                 <label htmlFor="price">price of event</label>
 				<input
 					type="number"
 					name="price"
 					value={price}
 					onChange={e => setPrice(e.target.value)}
-				/>
-
-                <label htmlFor="discription">start of event</label>
-				<input
-					type="text"
-					name="discription"
-					value={discription}
-					onChange={e => setDiscription(e.target.value)}
 				/>
 
                 <label htmlFor="startingTime">start of event</label>
@@ -157,7 +157,7 @@ function AddEvent(props) {
                  })}
                 </select>
 
-                <label htmlFor="ticket-link">age of entrance</label>
+                <label htmlFor="ticket-link">ticket - link</label>
 				<input
 					type="text"
 					name="ticket-link"

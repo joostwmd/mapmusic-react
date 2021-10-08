@@ -259,13 +259,13 @@ function FilterSection(props) {
     return (
         <div>            
          <div id="dateFilter">
-           <button onClick={clickedDayOne} style={dayOneClicked ? {color : "blue"}  : { color : "red" }}>{getDayOne()}</button>
-           <button onClick={clickedDayTwo} style={dayTwoClicked ? {color : "blue"}  : { color : "red" }}>{getDayTwo()}</button>
-           <button onClick={clickedDayThree} style={dayThreeClicked ? {color : "blue"}  : { color : "red" }}>{getDayThree()}</button>
-           <button onClick={clickedDayFour} style={dayFourClicked ? {color : "blue"}  : { color : "red" }}>{getDayFour()}</button>
-           <button onClick={clickedDayFive} style={dayFiveClicked ? {color : "blue"}  : { color : "red" }}>{getDayFive()}</button>
-           <button onClick={clickedDaySix} style={daySixClicked ? {color : "blue"}  : { color : "red" }}>{getDaySix()}</button>
-           <button onClick={clickedDaySeven} style={daySevenClicked ? {color : "blue"}  : { color : "red" }}>{getDaySeven()}</button>
+           <button onClick={clickedDayOne} style={dayOneClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDayOne()}</button>
+           <button onClick={clickedDayTwo} style={dayTwoClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDayTwo()}</button>
+           <button onClick={clickedDayThree} style={dayThreeClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDayThree()}</button>
+           <button onClick={clickedDayFour} style={dayFourClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDayFour()}</button>
+           <button onClick={clickedDayFive} style={dayFiveClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDayFive()}</button>
+           <button onClick={clickedDaySix} style={daySixClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDaySix()}</button>
+           <button onClick={clickedDaySeven} style={daySevenClicked ? {color : "#ffffff", backgroundColor : '#a48beb'}  : { color : "#a48beb" }}>{getDaySeven()}</button>
          </div>
 
          <div id="filterMenu">

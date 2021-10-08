@@ -6,6 +6,8 @@ import ArtistCard from '../components/ArtistCard'
 
 
 
+
+
 function Map() {
 
    const berlinBounds = [
@@ -24,9 +26,9 @@ function Map() {
        maxBounds : [
         [52.3673215655286, 13.086180844613281], // south west
         [52.70845414984733, 13.809688463870339] // north east
-    ] 
+    ] ,
        
-       //minZoom: 9
+        minZoom: 9
    })
 
    const [dragPan, setDragPan] = useState(false)
@@ -80,7 +82,7 @@ function Map() {
         console.log("x")
     }
 
-    console.log(filterMenuOpen)
+    
 
     // console.log("start ", startingTimeFilter)
     // console.log("end ", endingTimeFilter)
@@ -92,10 +94,11 @@ function Map() {
         return (
             event.date === dateFilter 
 
-        //  && Number(event.ageOfEntrance.slice(0, 1)) >= Number(ageFilter.slice(0, 1)) 
-        //  && Number(event.startingTime.slice(0, 1)) >= Number(startingTimeFilter.slice(0, 1)) 
-        //  && Number(event.endingTime.slice(0, 1)) <= Number(endingTimeFilter.slice(0, 1)) 
-        //  && event.cost <= costFilter && event.genre.includes(genreFilter) === true
+        //   && Number(event.ageOfEntrance.slice(0, 1)) >= Number(ageFilter.slice(0, 1)) 
+        //   && Number(event.startingTime.slice(0, 1)) >= Number(startingTimeFilter.slice(0, 1)) 
+        //   && Number(event.endingTime.slice(0, 1)) <= Number(endingTimeFilter.slice(0, 1)) 
+        //  && event.cost <= costFilter 
+        //  && event.genre.includes(genreFilter) === true
         )
     })
 
@@ -106,7 +109,7 @@ function Map() {
 
              {...viewport}
              mapboxApiAccessToken = "pk.eyJ1Ijoiam9vc3R3bWQiLCJhIjoiY2t1NDQ3NmJqMXRwbzJwcGM5a3FuY3B3dCJ9.yyon_mO5Y9sI1WgD-XFDRQ"
-             mapStyle = "mapbox://styles/joostwmd/ckucoygnc51gn18s0xu6mjltv"
+             mapStyle = "mapbox://styles/joostwmd/ckufanbzo4qlm18qj3w744lbx"
               onViewportChange = {viewport => {
                 setViewport(viewport)
              }}
@@ -122,6 +125,8 @@ function Map() {
                     >
 
                      <button 
+                      id="marker"
+
                       onClick={(e) => {
                          e.preventDefault()
                          setClickedEvent(event)
@@ -144,7 +149,9 @@ function Map() {
                           
                       }}
                      >
-                      <p>{event.location.name}</p>  
+                
+                      
+                      
                      </button>
                     </Marker>
                  )
@@ -160,33 +167,35 @@ function Map() {
 
                     <div>
                             <div id="popup">
-                                <div>
+                                <div id="eventInfo">
                                      <h1>{clickedEvent.name}</h1>
                                      <p>{clickedEvent.date.toString().slice(0, 10)}</p>
-                                     <p>some short discription</p>
-                                     <p>some dj</p>
-                                     <audio controls>
-                                         <source src="https://p.scdn.co/mp3-preview/6be8eb12ff18ae09b7a6d38ff1e5327fd128a74e?cid=162b7dc01f3a4a2ca32ed3cec83d1e02"></source>
-                                     </audio>
+                                     
+                                     <h5>{clickedEvent.discription}</h5>
+                                     
                                      <h3>info</h3>
                                      <p>genre : {clickedEvent.genre}</p>
                                      <p>cost : {clickedEvent.cost}</p>
                                      <p>opening Hours : from {clickedEvent.startingTime} to {clickedEvent.endingTime}</p>
                                      <p>age of entrance : {clickedEvent.ageOfEntrance}</p>
 
-                                     <h3>Line Up</h3>
-                                     <ArtistCard  clickedEvent={clickedEvent}  />
                                 </div>
 
                                
 
-                                <div>
+                                <div id="locationInfo">
                                      <h1>{clickedEvent.location.name}</h1>
-                                     <p>{clickedEvent.location.coordinates}</p>
+                                     <p>{clickedEvent.location.discription}</p>
+
+                                     <h3>arival</h3>
+
+                                     <p>next Station :  {clickedEvent.location.nearestStation}</p>
+                                     <p>available lines : {clickedEvent.location.availableLines}</p>                                    
+                                     <p>distance : {clickedEvent.location.distance}</p>
                                 </div>
                             </div>  
                     </div>               
-                                 </Popup>
+                  </Popup>
               ) : null}
               
               {hoveredEvent ? (
